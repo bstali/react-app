@@ -34,6 +34,7 @@ class App extends Component  {
     const doesShow = this.state.showEmployee;
     this.setState({showEmployee: !doesShow});
     console.log('hello');
+    console.log('bye');
   }
   
 
