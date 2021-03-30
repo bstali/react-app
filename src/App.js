@@ -33,8 +33,9 @@ class App extends Component  {
   toggleData = () => {
     const doesShow = this.state.showEmployee;
     this.setState({showEmployee: !doesShow});
-  };
-
+    console.log('hello');
+  }
+  
 
   render(){
     const style = {
