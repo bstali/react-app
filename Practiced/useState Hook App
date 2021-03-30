@@ -1,0 +1,37 @@
+import { useState } from 'react';
+import './App.css';
+import Person from './Person/Person';
+
+const App = props => {
+  const [initialState, newState ] = useState(
+    {
+      employee: [
+        {name:'Basit', id:'4'},
+        {name:'Hassan', id:'5'}
+      ]
+    }
+  );
+  const changeData = () => {
+    //console.log("clicked")
+    newState ({
+      employee: [
+        {name: 'Rehan', id:'1'},
+        {name:'Ajmal', id:'2'}
+      ]
+    });
+  };
+    return (
+      <div className="App">
+        <h1>Hello! Welcome to React!</h1> 
+        <Person name={initialState.employee[0].name} id={initialState.employee[0].id}/>
+        <Person  click={changeData}
+        name={initialState.employee[1].name} 
+        id={initialState.employee[1].id}> My Hobby is playing Golf 
+        </Person>
+        <button onClick={changeData}>Click to Change</button>
+      </div>
+    );
+} 
+  
+export default App; 
+
