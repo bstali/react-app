@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import classes from './App.module.css'; 
-import Person from './Person/Person'; 
+import Person from '../components/Persons/Person/Person'; 
 
 class App extends Component  {
   state =
@@ -20,8 +20,8 @@ class App extends Component  {
       this.setState({employee: employee})
     }
   changeName = (event, id) => { 
-    const employeeIndex = this.state.employee.findIndex(e => {
-      return e.id === id;
+    const employeeIndex = this.state.employee.findIndex(emp => {
+      return emp.id === id;
     });
     const emp = {...this.state.employee[employeeIndex]};
     emp.name= event.target.value;
@@ -33,22 +33,12 @@ class App extends Component  {
   toggleData = () => {
     const doesShow = this.state.showEmployee;
     this.setState({showEmployee: !doesShow});
-    console.log('hello');
-    console.log('bye');
   }
   
 
   render(){
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font:'inherit',
-      padding:'8px',
-      border: '1px solid blue',
-      cursor:'pointer',
-    };
-
     let employee = null
+    let btnClass=''
   if (this.state.showEmployee){
     employee =(
       <div>
@@ -62,8 +52,7 @@ class App extends Component  {
         })}
         </div>
     )
-    style.backgroundColor = 'red';
-  
+    btnClass= classes.red;
   }  
 
     const assignedClasses =[];
@@ -76,14 +65,13 @@ class App extends Component  {
   
     return (
       
-        <div className={classes.App}>
+      <div className={classes.App}>
         <h1>Hello! Welcome to React!</h1> 
         <p className={assignedClasses.join(' ')}>This is Working.</p>
-      <button
-        style={style} 
+        <button className={btnClass}
         onClick={this.toggleData}>Click to Change
-      </button>
-      {employee}
+        </button>
+        {employee}
       </div>
       
     );
