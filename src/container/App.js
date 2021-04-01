@@ -18,6 +18,7 @@ class App extends Component  {
       const employee = [...this.state.employee]
       employee.splice(employeeIndex, 1);
       this.setState({employee: employee})
+      console.log('hi');
     }
   changeName = (event, id) => { 
     const employeeIndex = this.state.employee.findIndex(emp => {
