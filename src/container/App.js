@@ -1,8 +1,13 @@
 import { Component } from 'react';
 import classes from './App.module.css'; 
-import Person from '../components/Persons/Person/Person'; 
+import Persons from '../components/Persons/Persons'; 
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component  {
+  constructor(props){
+    super(props);
+    console.log('[App.js] Constructor')
+  }
   state =
     {
       employee: [
@@ -10,8 +15,28 @@ class App extends Component  {
         {id:'2', name: 'Basit', age: 26 },
         {id:'3', name: 'Ajmal', age: 27 }
       ],
-      showEmployee: false
+      showEmployee: false,
+      showCockpit: true
     }
+
+    static getDerivedStateFromProps (props, state){
+      console.log('[App.js] getDerivedFromProps', props);
+      return state;
+    }
+     
+    componentDidMount(){
+      console.log('[App.js] componentDidMount');
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+      console.log('[App.js] shouldComponentUpdate')
+      return true;
+    }
+
+    componentDidUpdate(){
+      console.log('[App.js] componentDidUpdate')
+    }
+
     delEmployee = (employeeIndex) => {
       // better approach to update an array.. first make copy then mutate it.
       //const employee = this.state.employee.slice();
@@ -37,40 +62,28 @@ class App extends Component  {
   
 
   render(){
+    console.log('[App.js] render')
     let employee = null
-    let btnClass=''
-  if (this.state.showEmployee){
-    employee =(
-      <div>
-        {this.state.employee.map((employee, index) => {
-          return <Person
-          changed={(event) => this.changeName(event, employee.id)} 
-          click ={() => this.delEmployee(index)}
-          name={employee.name}
-          age={employee.age}
-          key={employee.id}/>
-        })}
-        </div>
-    )
-    btnClass= classes.red;
+    if (this.state.showEmployee){
+    employee =
+      <Persons
+      employee={this.state.employee}
+      changed={this.changeName}
+      click={this.delEmployee}/> 
   }  
 
-    const assignedClasses =[];
-    if (this.state.employee.length<=2) {
-      assignedClasses.push(classes.red);
-    } 
-    if (this.state.employee.length<=1) {
-      assignedClasses.push(classes.bold);
-    }
-  
     return (
       
       <div className={classes.App}>
-        <h1>Hello! Welcome to React!</h1> 
-        <p className={assignedClasses.join(' ')}>This is Working.</p>
-        <button className={btnClass}
-        onClick={this.toggleData}>Click to Change
+        <button 
+        onClick={() => this.setState({showCockpit: false})}>
+        Remove Cockpit
         </button>
+        {this.state.showCockpit ? <Cockpit
+        title={this.props.appTitle} 
+        showEmployee={this.state.showEmployee}
+        employeeLength={this.state.employee.length}
+        clicked={this.toggleData}/> : null}
         {employee}
       </div>
       
